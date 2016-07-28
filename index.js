@@ -13,13 +13,14 @@ app.get("/", function(req, res) {
 	res.sendFile("index.html");
 });
 
-app.get("\/.*\.js", function(req, res) {
-	console.log("WE HERE");
-	res.redirect("/");
-});
-
 io.on("connection", function(socket) {
 	console.log("A user connected");
+	socket.on("chat message", function (msg) {
+		console.log("message: " + msg);
+	});
+	socket.on("disconnect", function() {
+		console.log("User disconnected");
+	});
 });
 
 http.listen(3000, function() {
