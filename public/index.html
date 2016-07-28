@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+	<title>ChatBox</title>
+	<link rel="stylesheet" type="text/css" href="index.css" >
+	
+	</head>
+
+	<body>
+		<ul id="messages">
+		</ul>
+		<form action="">
+			<input type="text" id="m" autocomplete="off" />
+			<button type="Submit" value="Submit">Send</button>
+		</form>
+	<script src="socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+	</script>
+	</body>
+</html>
