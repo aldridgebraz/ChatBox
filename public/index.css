@@ -6,6 +6,7 @@
 
 body { 
 	font: 13px Helvetica, Arial; 
+	background: #222;
 }
 
 form { 
@@ -30,17 +31,19 @@ form button {
 	padding: 10px; 
 }
 
-#messages { 
-	list-style-type: none; 
-	margin: 0; 
-	padding: 0; 
-	margin-bottom: 5%
+#chathistory {
+    color: #DDD;
+    background: #222;
+    padding: 4px 6px;
+    border: 1px #222 solid;
+    font-family: Consolas, sans-serif;
+    font-size: 13px;
+	margin-bottom: 5%;
 }
-
-#messages li { 
-	padding: 5px 10px; 
+#chathistory p {
+    margin: 0;
+    padding: 3px 6px;
 }
-
-#messages li:nth-child(odd) { 
-	background: #eee; 
+#chathistory p:nth-child(odd) {
+    background: #333;
 }

@@ -8,24 +8,27 @@
 	</head>
 
 	<body>
-		<ul id="messages">
-		</ul>
+		<div id="chathistory">
+		</div>
+		
 		<form action="">
 			<input type="text" id="m" autocomplete="off" />
 			<button type="submit">Send</button>
 		</form>
 		
 		<script type="text/javascript">
-		var socket = io();
-		$('form').submit(function() {
-			socket.emit("chat message", $("#m").val());
-			$("#m").val("");
-			return false;
-		});
-		
-		socket.on("chat message", function(msg) {
-			$("#messages").append($("<li>").text(msg));
-		});
+			var socket = io();
+			
+			$("form").submit(function() {
+				socket.emit("chat message", $("#m").val());
+				$("#m").val("");
+				return false;
+			});
+			
+			socket.on("chat message", function(msg) {
+				$("#chathistory").append($("<p>").text(msg));
+				$('html, body').scrollTop( $(document).height() );
+			});
 		</script>
 	</body>
 </html>
