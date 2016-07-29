@@ -40,6 +40,14 @@ form button {
     font-size: 13px;
 	margin-bottom: 5%;
 }
+
+#m {
+	color: #DDD;
+    background: #222;
+	font-family: Consolas, sans-serif;
+    font-size: 13px;
+}
+
 #chathistory p {
     margin: 0;
     padding: 3px 6px;
