@@ -18,9 +18,18 @@
 		
 		<script type="text/javascript">
 			var socket = io();
+			var username = null;
+			socket.on("connect", function() {
+				username = prompt("Please enter your username");
+				if (username != null) {
+					socket.emit("new user", username);
+				}
+			});
 			
 			$("form").submit(function() {
 				socket.emit("chat message", $("#m").val());
+				$("#chathistory").append($("<p>").text($("#m").val()));
+				$('html, body').scrollTop( $(document).height() );
 				$("#m").val("");
 				return false;
 			});
@@ -29,6 +38,17 @@
 				$("#chathistory").append($("<p>").text(msg));
 				$('html, body').scrollTop( $(document).height() );
 			});
+			
+			socket.on("new user", function(username) {
+				$("#chathistory").append($("<p>").text(username + " has connected"));
+				$('html, body').scrollTop( $(document).height() );
+			});
+			
+			socket.on("user left", function(username) {
+				$("#chathistory").append($("<p>").text(username + " has disconnected"));
+				$('html, body').scrollTop( $(document).height() );
+			});
+			
 		</script>
 	</body>
 </html>
