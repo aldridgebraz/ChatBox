@@ -48,6 +48,12 @@ form button {
     font-size: 13px;
 }
 
+#userTyping {
+	color: #DDD;
+	font-family: Consolas, sans-serif;
+    font-size: 13px;
+}
+
 #chathistory p {
     margin: 0;
     padding: 3px 6px;

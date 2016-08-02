@@ -85,6 +85,11 @@ io.on("connection", function(socket) {
 		io.emit("user left", username);
 	});
 	
+	socket.on("user typing", function(user) {
+		socket.broadcast.emit("user typing", user);
+
+	});
+	
 });
 
 http.listen(3000, function() {
