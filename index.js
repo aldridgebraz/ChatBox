@@ -56,6 +56,21 @@ function find_user(id) {
 	return null;
 }
 
+function user_name_exists(name) {
+	console.log("name: " + name.valueOf());
+	var current = user_list;
+	while (current != null) {
+		console.log("List: " + current.username.valueOf());
+		if (current.username.valueOf() == name.valueOf()) {
+			console.log("username already exists");
+			return true;
+		}
+		current = current.next;
+	}
+	console.log("username was not found in list");
+	return false;
+}
+
 
 app.use(express.static(__dirname + "/public"));
 
@@ -68,6 +83,11 @@ app.get("/", function(req, res) {
 io.on("connection", function(socket) {
 	console.log("A user connected");
 
+	socket.on("check user", function(username) {
+		var exists = user_name_exists(username);
+		socket.emit("isUnique", exists);
+	});
+	
 	socket.on("new user", function(username) {
 		
 		console.log("username: " + username);

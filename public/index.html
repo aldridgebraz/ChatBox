@@ -23,10 +23,17 @@
 			var username = null;
 			
 			socket.on("connect", function() {
-				username = prompt("Please enter your username");
-				if (username != null) {
-					socket.emit("new user", username);
-				}
+					username = prompt("Please enter your username");
+					socket.emit("check user", username);
+					
+					socket.on("isUnique", function (nameExists) {
+						if(nameExists == false)
+							socket.emit("new user", username);
+						else {
+							alert("Please choose another name");
+							location.reload(true);
+						}
+					});		
 			});
 			
 			$("form").submit(function() {
@@ -47,9 +54,11 @@
 				$('html, body').scrollTop( $(document).height() );
 			});
 			
-			socket.on("user left", function(username) {
-				$("#chathistory").append($("<p>").text(username + " has disconnected"));
-				$('html, body').scrollTop( $(document).height() );
+			socket.on("user left", function(name) {
+				if (name != null) {
+					$("#chathistory").append($("<p>").text(name + " has disconnected"));
+					$('html, body').scrollTop( $(document).height() );
+				}
 			});
 			
 			// Handles ${user} typing detecting
