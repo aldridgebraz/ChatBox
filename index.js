@@ -45,6 +45,17 @@ function remove_user(id) {
 	return null;
 }
 
+function find_user(id) {
+	var current = user_list;
+	while (current != null) {
+		if (current.id == id) {
+			return current.username;
+		}
+		current = current.next;
+	}
+	return null;
+}
+
 
 app.use(express.static(__dirname + "/public"));
 
@@ -72,7 +83,7 @@ io.on("connection", function(socket) {
 	
 	socket.on("chat message", function (msg) {
 		console.log("message: " + msg);
-		socket.broadcast.emit("chat message", msg);
+		socket.broadcast.emit("chat message", msg, find_user(socket.id));
 	});
 	
 	socket.on("disconnect", function() {

@@ -31,14 +31,14 @@
 			
 			$("form").submit(function() {
 				socket.emit("chat message", $("#m").val());
-				$("#chathistory").append($("<p>").text($("#m").val()));
+				$("#chathistory").append($("<p>").text(username + " says: " + $("#m").val()));
 				$('html, body').scrollTop( $(document).height() );
 				$("#m").val("");
 				return false;
 			});
 			
-			socket.on("chat message", function(msg) {
-				$("#chathistory").append($("<p>").text(msg));
+			socket.on("chat message", function(msg, name) {
+				$("#chathistory").append($("<p>").text(name + " says: " + msg));
 				$('html, body').scrollTop( $(document).height() );
 			});
 			
