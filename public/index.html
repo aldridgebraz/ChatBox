@@ -14,11 +14,14 @@
 		<form action="">
 			<input type="text" id="m" autocomplete="off" />
 			<button type="submit">Send</button>
+			<div id="userTyping">
+			</div>
 		</form>
 		
 		<script type="text/javascript">
 			var socket = io();
 			var username = null;
+			
 			socket.on("connect", function() {
 				username = prompt("Please enter your username");
 				if (username != null) {
@@ -47,6 +50,45 @@
 			socket.on("user left", function(username) {
 				$("#chathistory").append($("<p>").text(username + " has disconnected"));
 				$('html, body').scrollTop( $(document).height() );
+			});
+			
+			// Handles ${user} typing detecting
+			document.getElementById("m").onkeypress = function () {
+				socket.emit("user typing", username);				
+			};
+			
+			// Removes user from typing list
+			function clearUser(user) {
+
+				var arr = $("#userTyping p");
+				var exists = false;
+				for(i = 0; i < arr.length; i++) {
+					if (arr[i].innerHTML.search(user) != -1) {
+						console.log(user + " found typing in remove");
+						arr[i].remove();
+						exists = true;
+						break;
+					}
+				}
+			}
+			
+			// Adds user to typing list
+			socket.on("user typing", function(user) {
+				var arr = $("#userTyping p");
+				var exists = false;
+				console.log(user);
+				
+				for(i = 0; i < arr.length; i++) {
+					if (arr[i].innerHTML.search(user) != -1) {
+						console.log(user + " found typing in add");
+						exists = true;
+						break;
+					}
+				}
+				if (exists == false)
+					$("#userTyping").append($("<p>").text(user + " is typing"));
+					
+				setTimeout(clearUser.bind(user), 1000);
 			});
 			
 		</script>
